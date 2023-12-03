@@ -72,11 +72,8 @@ void playerMove(char player, game* g){
     do {
         printf("Player %c, please enter position of your desired move:\n", player);
         printf("\n");
-        printf("x coordinate: \n");
-        scanf("%d", &j);
-        printf("\n");
-        printf("y coordinate: \n");
-        scanf("%d", &i);
+        printf("x and y coordinates: \n");
+        scanf("%d %d", &j, &i);
         printf("\n");
 
         if (i < 0 || i >= WIDTH || j < 0 || j >= WIDTH || g->matrix[i][j] != EMPTY){
@@ -109,7 +106,7 @@ char checkWinner(game* g){
 
     // collumns
     for(int i = 0; i < WIDTH; i++){
-        if (g->matrix[0][i] == g->matrix[1][i] && g->matrix[i][0] == g->matrix[i][2]){
+        if (g->matrix[0][i] == g->matrix[1][i] && g->matrix[0][i] == g->matrix[2][i]){
             return g->matrix[0][i];
         }
     }
@@ -131,11 +128,12 @@ char checkWinner(game* g){
 
 void game_run(game* g){
     char currentPlayer = X;
+    char winner;
     printMatrix(g);
     while(!g->isWon || checkFreeSpace(g) != 0){
         playerMove(currentPlayer, g);
         computeMove(g);
-        char winner = checkWinner(g);
+        winner = checkWinner(g);
         if (winner != ' ' || checkFreeSpace(g) == 0){
             break;
         } 
@@ -145,7 +143,11 @@ void game_run(game* g){
             currentPlayer = X;
         }
     }
-    printf("the winner is: %c !!!\n", currentPlayer);
+    if (winner == ' '){
+        printf("Its a draw\n!");
+    } else {
+        printf("the winner is: %c !!!\n", currentPlayer);
+    }
 }
 
 
