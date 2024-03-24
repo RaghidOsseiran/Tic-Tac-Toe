@@ -1,19 +1,5 @@
 #include "game.h"
 
-
-typedef enum {
-    O = 'O',
-    X = 'X',
-    EMPTY = ' '
-} XO;
-
-
-typedef struct {
-    char** matrix;
-    bool isWon;
-} game;
-
-
 char** createMatrix(){
     char** res = malloc(WIDTH * sizeof(char*));
     if (res == NULL){
